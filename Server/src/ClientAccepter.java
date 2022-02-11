@@ -1,10 +1,8 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 public class ClientAccepter extends Thread
 {
-	private ServerSocket serverSocket;
 	private Socket socket;
 	
 	private ObjectInputStream input = null;
@@ -12,20 +10,17 @@ public class ClientAccepter extends Thread
 	
 	public ClientAccepter(ServerSocket serverSocket, Socket socket)
 	{
-		this.serverSocket = serverSocket;
 		this.socket = socket;
 		
 		try
 		{
 			input = new ObjectInputStream(socket.getInputStream());
-//			output = new ObjectOutputStream(socket.getOutputStream());
+			output = new ObjectOutputStream(socket.getOutputStream());
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		
-		System.out.println("accepter: A client connected!");
 	}
 	
 	@Override
@@ -33,12 +28,13 @@ public class ClientAccepter extends Thread
 	{
 		try
 		{
-//			output.writeObject(rand);
-//			output.flush();
+			Complex [] numbers = getComplexNumbers();
+			String operator = getOperator();
+			Complex result = Operate(numbers[0], numbers[1], operator);
+			sendComplexNumber(result);
 			
-			Complex obj = (Complex) input.readObject();
-			System.out.println(obj);
-			
+			input.close();
+			output.close();
 			socket.close();
 		}
 		catch (Exception e)
@@ -46,4 +42,68 @@ public class ClientAccepter extends Thread
 			e.printStackTrace();
 		}
 	}
+	
+	public Complex [] getComplexNumbers()
+	{
+		Complex [] numbers = new Complex[2];
+		try
+		{
+			numbers[0] = (Complex)input.readObject();		
+			numbers[1] = (Complex)input.readObject();
+			return numbers;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public void sendComplexNumber(Complex number)
+	{
+		try
+		{
+			output.writeObject(number);
+			output.flush();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public String getOperator()
+	{
+		try
+		{
+			String operator = (String)input.readObject();
+			return operator;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Complex Operate(Complex number1, Complex number2, String operator)
+	{
+		if (operator.equals("+"))
+		{
+			return number1.summation(number2);
+		}
+		else if (operator.equals("-"))
+		{
+			return number1.substraction(number2);
+		}
+		else if (operator.equals("/"))
+		{
+			return number1.division(number2);
+		}
+		else if (operator.equals("*"))
+		{
+			return number1.multiplication(number2);
+		}
+		return null;
+	}
+	
 }

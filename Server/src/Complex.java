@@ -48,6 +48,14 @@ public class Complex implements Serializable
 		
 	}
 	
+	public boolean equals(Complex number)
+	{
+		if (this.real == number.real && this.imag == number.imag)
+			return true;
+		else
+			return false;
+	}
+	
 	public float getReal() {
 		return real;
 	}

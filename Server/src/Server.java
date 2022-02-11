@@ -22,10 +22,12 @@ public class Server
 	
 	public void startServer()
 	{
-		System.out.println("Started");
+		System.out.println("Server started at address: " + address.getHostName());
+
 		while(true)
 		{
-			try {
+			try
+			{
 				socket = serverSocket.accept();
 				ClientAccepter accepter = new ClientAccepter(serverSocket, socket);
 				accepter.start();
