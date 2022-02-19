@@ -15,7 +15,7 @@ public class TestClient {
 		
 			System.out.println("I am connected to server");
 			
-			out.writeObject(new Complex(5, -2));
+			out.writeObject(new Complex(14, -3));
 			out.flush();
 			
 			out.writeObject(new Complex(3, 4));
