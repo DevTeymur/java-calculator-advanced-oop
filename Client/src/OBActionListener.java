@@ -18,7 +18,14 @@ public class OBActionListener implements ActionListener{
 		}
 		else if (operationButton.getText().equals("="))
 		{
-			// TODO: server calculation
+			String result = Client.connectionController.calculate(
+				Client.num1RealField.getText(),
+				Client.num1ImagField.getText(),
+				Client.num2RealField.getText(),
+				Client.num2ImagField.getText(),
+				Client.opLabel.getText()
+			);
+			Client.outputField.setText(result);
 		}
 		else
 		{

@@ -31,12 +31,32 @@ public class ClientAccepter extends Thread
 			while(true)
 			{
 				boolean signal = getEndingSignal();
+				
 				if (signal)
 					break;
+				
 				Complex [] numbers = getComplexNumbers();
+				if (numbers == null)
+				{
+					sendComplexNumber("Wrong Input!");
+					continue;
+				}
+				
 				String operator = getOperator();
+				if (operator == null)
+				{
+					sendComplexNumber("Wrong Input!");
+					continue;
+				}
+				
 				Complex result = Operate(numbers[0], numbers[1], operator);
-				sendComplexNumber(result);
+				if (result == null)
+				{
+					sendComplexNumber("Wrong Input!");
+					continue;
+				}
+				
+				sendComplexNumber(result.toString());
 			}
 			input.close();
 			output.close();
@@ -53,8 +73,14 @@ public class ClientAccepter extends Thread
 		Complex [] numbers = new Complex[2];
 		try
 		{
-			numbers[0] = (Complex)input.readObject();		
-			numbers[1] = (Complex)input.readObject();
+			float num1real = Float.parseFloat((String)input.readObject());
+			float num1imag = Float.parseFloat((String)input.readObject());
+			float num2real = Float.parseFloat((String)input.readObject());
+			float num2imag = Float.parseFloat((String)input.readObject());
+			
+			numbers[0] = new Complex(num1real, num1imag);		
+			numbers[1] = new Complex(num2real, num2imag);
+			
 			return numbers;
 		}
 		catch (Exception e)
@@ -63,7 +89,7 @@ public class ClientAccepter extends Thread
 		}
 	}
 	
-	public void sendComplexNumber(Complex number)
+	public void sendComplexNumber(String number)
 	{
 		try
 		{
@@ -95,7 +121,7 @@ public class ClientAccepter extends Thread
 		try
 		{
 			String signal = (String)input.readObject();
-			if (signal.equals("true"))
+			if (signal.equals("t"))
 				return true;
 			else
 				return false;
