@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Client {
 	
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 590;
+	
+	public static ServerConnectionController connectionController;
 	
 	public static JFrame frame;
 	public static Label opLabel;
@@ -13,12 +16,15 @@ public class Client {
 	public static InputTextField num1ImagField;
 	public static InputTextField num2RealField;
 	public static InputTextField num2ImagField;
+	public static JTextField outputField;
 
 	public static void main(String[] args)
 	{
+		
+		connectionController = new ServerConnectionController("localhost", 1224);
+		
 		frame = new JFrame("Complex Number Calculator");
 		frame.setSize(WIDTH, HEIGHT);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLayout(null);
 		
@@ -41,11 +47,27 @@ public class Client {
 		
 		selectedField = num1RealField;
 		
+		outputField = new JTextField();
+		outputField.setBounds(30, 470, 316, 60);
+		outputField.setFont(new Font("Calibri",Font.PLAIN,30));
+	    frame.add(outputField);
+		
 		generateNumberKeyPad();
 		generateOperatorKeyPad();
 
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	
+		frame.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent evt)
+			{
+				Client.connectionController.endConnection();
+				System.exit(0);
+			}
+		});
+		
 		frame.setVisible(true);
-
 	}
 	
 	public static void creatConstLabel(JFrame jframe, String text, int posX, int posY, int width, int height)
@@ -82,7 +104,7 @@ public class Client {
 		
 		new OperationButton(frame, "+", 380, 150, 90, 60);
 		new OperationButton(frame, "-", 380, 230, 90, 60);
-		new OperationButton(frame, "x", 380, 310, 90, 60);
+		new OperationButton(frame, "*", 380, 310, 90, 60);
 		new OperationButton(frame, "/", 380, 390, 90, 60);
 		new OperationButton(frame, "=", 380, 470, 90, 60);
 	}
