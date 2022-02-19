@@ -15,6 +15,9 @@ public class TestClient {
 		
 			System.out.println("I am connected to server");
 			
+			out.writeObject(new String("false"));
+			out.flush();
+			
 			out.writeObject(new Complex(14, -3));
 			out.flush();
 			
@@ -27,6 +30,14 @@ public class TestClient {
 			Complex result = (Complex)in.readObject();
 			
 			System.out.println(result);
+			
+			
+			Thread.sleep(10000);
+			
+			System.out.println("Session ended");
+			
+			out.writeObject(new String("true"));
+			out.flush();
 			
 			in.close();
 			out.close();

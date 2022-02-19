@@ -28,11 +28,16 @@ public class ClientAccepter extends Thread
 	{
 		try
 		{
-			Complex [] numbers = getComplexNumbers();
-			String operator = getOperator();
-			Complex result = Operate(numbers[0], numbers[1], operator);
-			sendComplexNumber(result);
-			
+			while(true)
+			{
+				boolean signal = getEndingSignal();
+				if (signal)
+					break;
+				Complex [] numbers = getComplexNumbers();
+				String operator = getOperator();
+				Complex result = Operate(numbers[0], numbers[1], operator);
+				sendComplexNumber(result);
+			}
 			input.close();
 			output.close();
 			socket.close();
@@ -82,6 +87,23 @@ public class ClientAccepter extends Thread
 		{
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public boolean getEndingSignal()
+	{
+		try
+		{
+			String signal = (String)input.readObject();
+			if (signal.equals("true"))
+				return true;
+			else
+				return false;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return true;
 		}
 	}
 	
