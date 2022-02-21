@@ -12,7 +12,7 @@ public class ITFMouseListener extends MouseAdapter
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
-		Client.selectedField = inputTextField;
+		Client.changeSelectedField(inputTextField);
 		System.out.println("Cur Field contain: " + inputTextField.getText());
 	}
 }

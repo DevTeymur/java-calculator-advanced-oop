@@ -2,7 +2,7 @@ import java.awt.event.*;
 
 public class OBActionListener implements ActionListener{
 
-	public OperationButton operationButton;
+	private OperationButton operationButton;
 	
 	public OBActionListener(OperationButton button)
 	{
@@ -12,20 +12,14 @@ public class OBActionListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (operationButton.getText().equals("C"))
+		if (operationButtonTextEquals("C"))
 		{
 			clearCells();
 		}
-		else if (operationButton.getText().equals("="))
+		else if (operationButtonTextEquals("="))
 		{
-			String result = Client.connectionController.calculate(
-				Client.num1RealField.getText(),
-				Client.num1ImagField.getText(),
-				Client.num2RealField.getText(),
-				Client.num2ImagField.getText(),
-				Client.opLabel.getText()
-			);
-			Client.outputField.setText(result);
+			String result = Client.findResult();
+			Client.setOutPutText(result);
 		}
 		else
 		{
@@ -34,18 +28,19 @@ public class OBActionListener implements ActionListener{
 		
 	}
 	
-	public void clearCells()
+	private boolean operationButtonTextEquals(String text)
 	{
-		Client.num1RealField.setText("");
-		Client.num1ImagField.setText("");
-		Client.num2RealField.setText("");
-		Client.num2ImagField.setText("");
-
+		return operationButton.getText().equals(text);
 	}
 	
-	public void setOperation()
+	private void clearCells()
 	{
-		Client.opLabel.setText(operationButton.getText());
+		Client.clearNumberFields();
+	}
+	
+	private void setOperation()
+	{
+		Client.setOpLabelText(operationButton.getText());
 	}
 
 }

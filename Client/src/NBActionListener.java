@@ -2,7 +2,7 @@ import java.awt.event.*;
 
 public class NBActionListener implements ActionListener{
 
-	public NumberButton numberButton;
+	private NumberButton numberButton;
 	 
 	public NBActionListener(NumberButton button)
 	{
@@ -12,19 +12,24 @@ public class NBActionListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (Client.selectedField.getText().equals("") && numberButton.getText().equals("."))
+		if (Client.isSelectedFieldEmpty() && buttonTextEquals("."))
 		{
-			Client.selectedField.setText("0.");
+			Client.setSelectedTextField("0.");
 		}
 		else if ( ! 
 			(
-				Client.selectedField.getText().contains(".") && 
-				numberButton.getText().equals(".")
+				Client.getSelectedTextField().contains(".") && 
+				buttonTextEquals(".")
 			)
 		)
 		{
-			String newText = Client.selectedField.getText() + numberButton.getText();
-			Client.selectedField.setText(newText);
+			String newText = Client.getSelectedTextField() + numberButton.getText();
+			Client.setSelectedTextField(newText);
 		}
+	}
+	
+	private boolean buttonTextEquals(String text)
+	{
+		return numberButton.getText().equals(text);
 	}
 }

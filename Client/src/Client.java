@@ -4,19 +4,21 @@ import java.awt.event.*;
 
 public class Client {
 	
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 590;
+	private static final int WIDTH = 500;
+	private static final int HEIGHT = 590;
 	
-	public static ServerConnectionController connectionController;
+	private static ServerConnectionController connectionController;
 	
-	public static JFrame frame;
-	public static Label opLabel;
-	public static InputTextField selectedField;
-	public static InputTextField num1RealField;
-	public static InputTextField num1ImagField;
-	public static InputTextField num2RealField;
-	public static InputTextField num2ImagField;
-	public static JTextField outputField;
+	private static JFrame frame;
+	private static Label opLabel;
+	
+	private static InputTextField selectedField;
+	
+	private static InputTextField num1RealField;
+	private static InputTextField num1ImagField;
+	private static InputTextField num2RealField;
+	private static InputTextField num2ImagField;
+	private static JTextField outputField;
 
 	public static void main(String[] args)
 	{
@@ -107,6 +109,55 @@ public class Client {
 		new OperationButton(frame, "*", 380, 310, 90, 60);
 		new OperationButton(frame, "/", 380, 390, 90, 60);
 		new OperationButton(frame, "=", 380, 470, 90, 60);
+	}
+	
+	public static boolean isSelectedFieldEmpty()
+	{
+		return selectedField.getText().equals("");
+	}
+	
+	public static void setSelectedTextField(String text)
+	{
+		selectedField.setText(text);
+	}
+	
+	public static String getSelectedTextField()
+	{
+		return selectedField.getText();
+	}
+	
+	public static void setOpLabelText(String text)
+	{
+		opLabel.setText(text);
+	}
+	
+	public static String findResult()
+	{
+		return connectionController.calculate(
+			num1RealField.getText(),
+			num1ImagField.getText(),
+			num2RealField.getText(),
+			num2ImagField.getText(),
+			opLabel.getText()
+		);
+	}
+	
+	public static void setOutPutText(String text)
+	{
+		outputField.setText(text);
+	}
+	
+	public static void clearNumberFields()
+	{
+		num1RealField.setText("");
+		num1ImagField.setText("");
+		num2RealField.setText("");
+		num2ImagField.setText("");
+	}
+	
+	public static void changeSelectedField(InputTextField newField)
+	{
+		selectedField = newField;
 	}
 
 }
