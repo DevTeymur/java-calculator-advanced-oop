@@ -35,7 +35,7 @@ public class ServerConnectionController
 		return receiveData();
 	}
 
-	public String receiveData()
+	private String receiveData()
 	{
 		try
 		{
@@ -47,7 +47,7 @@ public class ServerConnectionController
 		}
 	}
 	
-	public void sendData(String [] datas, String operator)
+	private void sendData(String [] datas, String operator)
 	{
 		try
 		{
