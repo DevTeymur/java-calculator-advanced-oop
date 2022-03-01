@@ -128,7 +128,9 @@ public class Client {
 	
 	public static boolean isSelectedFieldEmpty()
 	{
-		return selectedField.getText().equals("");
+		return (
+			selectedField.getText().equals("") || 
+			selectedField.getText().equals("-"));
 	}
 	
 	public static void setSelectedTextField(String text)
