@@ -14,7 +14,7 @@ public class NBActionListener implements ActionListener{
 	{
 		if (Client.isSelectedFieldEmpty() && buttonTextEquals("."))
 		{
-			Client.setSelectedTextField("0.");
+			Client.setSelectedTextField(Client.getSelectedTextField() + "0.");
 		}
 		else if ( ! 
 			(
