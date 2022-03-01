@@ -7,21 +7,27 @@ public class ServerConnectionController
 	public Socket socket;
 	public ObjectInputStream input;
 	public ObjectOutputStream output;
+	public boolean connected = false;
 	
-	public ServerConnectionController(String inetAdress, int port)
+	public ServerConnectionController(String inetAddress, int port)
+	{
+		connectServer(inetAddress, port);
+	}
+	
+	public void connectServer(String inetAddress, int port)
 	{
 		try
 		{
-			socket = new Socket(InetAddress.getByName(inetAdress), port);
+			socket = new Socket(InetAddress.getByName(inetAddress), port);
 			
 			output = new ObjectOutputStream(socket.getOutputStream());
 			input = new ObjectInputStream(socket.getInputStream());
 			
-
+			connected = true;
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			connected = false;
 		}
 	}
 	

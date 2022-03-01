@@ -8,7 +8,7 @@ public class ClientAccepter extends Thread
 	private ObjectInputStream input = null;
 	private ObjectOutputStream output = null;
 	
-	public ClientAccepter(ServerSocket serverSocket, Socket socket)
+	public ClientAccepter(Socket socket)
 	{
 		this.socket = socket;
 		
@@ -40,19 +40,19 @@ public class ClientAccepter extends Thread
 				
 				if (numbers == null || operator == null)
 				{
-					sendComplexNumber("Wrong Input!");
+					sendData("Wrong Input!");
 					continue;
 				}
 
-				Complex result = Operate(numbers[0], numbers[1], operator);
+				String result = Operate(numbers[0], numbers[1], operator);
 
 				if (result == null)
 				{
-					sendComplexNumber("Wrong Input!");
+					sendData("Wrong Input!");
 					continue;
 				}
 				
-				sendComplexNumber(result.toString());
+				sendData(result);
 			}
 			input.close();
 			output.close();
@@ -66,37 +66,32 @@ public class ClientAccepter extends Thread
 	
 	public Complex [] getComplexNumbers()
 	{
-		String n1r, n1i, n2r, n2i;
+		String strN1R, strN1I, strN2R, strN2I;
 		Complex [] numbers = new Complex[2];
 		try
 		{
-			n1r = (String)input.readObject();
-			System.out.println("accepted n1r");
-			n1i = (String)input.readObject();
-			System.out.println("accepted n1i");
-			n2r = (String)input.readObject();
-			System.out.println("accepted n2r");
-			
-			n2i = (String)input.readObject();
-			
-			System.out.println("accepted n2i");
+			strN1R = (String)input.readObject();
+			strN1I = (String)input.readObject();
+			strN2R = (String)input.readObject();
+			strN2I = (String)input.readObject();			
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			return null;
 		}
 		
 		try
 		{
-			float num1real = Float.parseFloat(n1r);
-			float num1imag = Float.parseFloat(n1i);
-			float num2real = Float.parseFloat(n2r);
-			float num2imag = Float.parseFloat(n2i);
+			float num1real = Float.parseFloat(strN1R);
+			float num1imag = Float.parseFloat(strN1I);
+			float num2real = Float.parseFloat(strN2R);
+			float num2imag = Float.parseFloat(strN2I);
 			
 			numbers[0] = new Complex(num1real, num1imag);		
 			numbers[1] = new Complex(num2real, num2imag);
 		}
-		catch (Exception e)
+		catch (NumberFormatException e)
 		{
 			return null;
 		}
@@ -104,7 +99,7 @@ public class ClientAccepter extends Thread
 		return numbers;
 	}
 	
-	public void sendComplexNumber(String number)
+	public void sendData(String number)
 	{
 		try
 		{
@@ -122,7 +117,6 @@ public class ClientAccepter extends Thread
 		try
 		{
 			String operator = (String)input.readObject();
-			System.out.println("accepted op");
 			return operator;
 		}
 		catch (Exception e)
@@ -137,7 +131,6 @@ public class ClientAccepter extends Thread
 		try
 		{
 			String signal = (String)input.readObject();
-			System.out.println("accepted signal");
 			if (signal.equals("t"))
 				return true;
 			else
@@ -150,25 +143,32 @@ public class ClientAccepter extends Thread
 		}
 	}
 	
-	public Complex Operate(Complex number1, Complex number2, String operator)
+	public String Operate(Complex number1, Complex number2, String operator)
 	{
 		if (operator.equals("+"))
 		{
-			return number1.summation(number2);
+			return number1.summation(number2).toString();
 		}
 		else if (operator.equals("-"))
 		{
-			return number1.substraction(number2);
-		}
-		else if (operator.equals("/"))
-		{
-			return number1.division(number2);
+			return number1.substraction(number2).toString();
 		}
 		else if (operator.equals("*"))
 		{
-			return number1.multiplication(number2);
+			return number1.multiplication(number2).toString();
 		}
-		return null;
+		else if (operator.equals("/"))
+		{
+			try
+			{
+				return number1.division(number2).toString();
+			}
+			catch (ArithmeticException e)
+			{
+				return "Cannot divide by zero";
+			}
+		}
+		return "Wrong Operator!";
 	}
 	
 }

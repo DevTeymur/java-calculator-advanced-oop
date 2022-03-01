@@ -29,7 +29,7 @@ public class Server
 			try
 			{
 				socket = serverSocket.accept();
-				ClientAccepter accepter = new ClientAccepter(serverSocket, socket);
+				ClientAccepter accepter = new ClientAccepter(socket);
 				accepter.start();
 			}
 			catch (IOException e)

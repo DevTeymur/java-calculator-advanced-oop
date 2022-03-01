@@ -14,12 +14,19 @@ public class OBActionListener implements ActionListener{
 	{
 		if (operationButtonTextEquals("C"))
 		{
-			clearCells();
+			Client.clearFields();
+		}
+		else if (operationButtonTextEquals("DEL"))
+		{
+			Client.backSpaceFiled();
+		}
+		else if (operationButtonTextEquals("+/-"))
+		{
+			Client.negativate();
 		}
 		else
 		{
-			String result = Client.findResult(getOperation());
-			Client.setOutPutText(result);
+			Client.calcAndShowResult(getOperator());
 		}
 		
 	}
@@ -29,12 +36,7 @@ public class OBActionListener implements ActionListener{
 		return operationButton.getText().equals(text);
 	}
 	
-	private void clearCells()
-	{
-		Client.clearNumberFields();
-	}
-	
-	private String getOperation()
+	private String getOperator()
 	{
 		return operationButton.getText();
 	}
