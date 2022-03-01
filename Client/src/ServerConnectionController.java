@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.Arrays;
 import java.io.*;
 
 public class ServerConnectionController
@@ -26,6 +27,12 @@ public class ServerConnectionController
 	
 	public String calculate(String num1real, String num1imag, String num2real, String num2imag, String operator)
 	{
+		System.out.println(Arrays.toString(new String [] {
+			num1real,
+			num1imag,
+			num2real,
+			num2imag,
+		}));
 		sendData(new String [] {
 			num1real,
 			num1imag,
@@ -39,11 +46,14 @@ public class ServerConnectionController
 	{
 		try
 		{
-			return (String)input.readObject();
+			String recievedData = (String)input.readObject();
+			System.out.println(recievedData);
+			return recievedData;
+//			return (String)input.readObject();
 		}
 		catch (Exception e)
 		{
-			return null;
+			return "Connection error";
 		}
 	}
 	

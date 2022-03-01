@@ -108,7 +108,7 @@ public class Client {
 		new OperationButton(frame, "-", 380, 230, 90, 60);
 		new OperationButton(frame, "*", 380, 310, 90, 60);
 		new OperationButton(frame, "/", 380, 390, 90, 60);
-		new OperationButton(frame, "=", 380, 470, 90, 60);
+		//new OperationButton(frame, "=", 380, 470, 90, 60);
 	}
 	
 	public static boolean isSelectedFieldEmpty()
@@ -131,14 +131,15 @@ public class Client {
 		opLabel.setText(text);
 	}
 	
-	public static String findResult()
+	public static String findResult(String operator)
 	{
 		return connectionController.calculate(
 			num1RealField.getText(),
 			num1ImagField.getText(),
 			num2RealField.getText(),
 			num2ImagField.getText(),
-			opLabel.getText()
+			operator
+//			opLabel.getText()
 		);
 	}
 	
@@ -153,6 +154,7 @@ public class Client {
 		num1ImagField.setText("");
 		num2RealField.setText("");
 		num2ImagField.setText("");
+		outputField.setText("");
 	}
 	
 	public static void changeSelectedField(InputTextField newField)

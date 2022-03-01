@@ -36,20 +36,16 @@ public class ClientAccepter extends Thread
 					break;
 				
 				Complex [] numbers = getComplexNumbers();
-				if (numbers == null)
-				{
-					sendComplexNumber("Wrong Input!");
-					continue;
-				}
-				
 				String operator = getOperator();
-				if (operator == null)
+				
+				if (numbers == null || operator == null)
 				{
 					sendComplexNumber("Wrong Input!");
 					continue;
 				}
-				
+
 				Complex result = Operate(numbers[0], numbers[1], operator);
+
 				if (result == null)
 				{
 					sendComplexNumber("Wrong Input!");
@@ -70,23 +66,42 @@ public class ClientAccepter extends Thread
 	
 	public Complex [] getComplexNumbers()
 	{
+		String n1r, n1i, n2r, n2i;
 		Complex [] numbers = new Complex[2];
 		try
 		{
-			float num1real = Float.parseFloat((String)input.readObject());
-			float num1imag = Float.parseFloat((String)input.readObject());
-			float num2real = Float.parseFloat((String)input.readObject());
-			float num2imag = Float.parseFloat((String)input.readObject());
+			n1r = (String)input.readObject();
+			System.out.println("accepted n1r");
+			n1i = (String)input.readObject();
+			System.out.println("accepted n1i");
+			n2r = (String)input.readObject();
+			System.out.println("accepted n2r");
 			
-			numbers[0] = new Complex(num1real, num1imag);		
-			numbers[1] = new Complex(num2real, num2imag);
+			n2i = (String)input.readObject();
 			
-			return numbers;
+			System.out.println("accepted n2i");
 		}
 		catch (Exception e)
 		{
 			return null;
 		}
+		
+		try
+		{
+			float num1real = Float.parseFloat(n1r);
+			float num1imag = Float.parseFloat(n1i);
+			float num2real = Float.parseFloat(n2r);
+			float num2imag = Float.parseFloat(n2i);
+			
+			numbers[0] = new Complex(num1real, num1imag);		
+			numbers[1] = new Complex(num2real, num2imag);
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+		
+		return numbers;
 	}
 	
 	public void sendComplexNumber(String number)
@@ -107,6 +122,7 @@ public class ClientAccepter extends Thread
 		try
 		{
 			String operator = (String)input.readObject();
+			System.out.println("accepted op");
 			return operator;
 		}
 		catch (Exception e)
@@ -121,6 +137,7 @@ public class ClientAccepter extends Thread
 		try
 		{
 			String signal = (String)input.readObject();
+			System.out.println("accepted signal");
 			if (signal.equals("t"))
 				return true;
 			else
