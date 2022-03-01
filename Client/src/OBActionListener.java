@@ -16,14 +16,10 @@ public class OBActionListener implements ActionListener{
 		{
 			clearCells();
 		}
-		else if (operationButtonTextEquals("="))
-		{
-			String result = Client.findResult();
-			Client.setOutPutText(result);
-		}
 		else
 		{
-			setOperation();
+			String result = Client.findResult(getOperation());
+			Client.setOutPutText(result);
 		}
 		
 	}
@@ -38,9 +34,9 @@ public class OBActionListener implements ActionListener{
 		Client.clearNumberFields();
 	}
 	
-	private void setOperation()
+	private String getOperation()
 	{
-		Client.setOpLabelText(operationButton.getText());
+		return operationButton.getText();
 	}
 
 }

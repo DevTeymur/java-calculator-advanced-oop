@@ -39,4 +39,10 @@ public class Server
 			System.out.println("server: A client connected!");
 		}	
 	}
+	
+	public static void main(String[] args)
+	{
+		Server server =  new Server(1224);
+		server.startServer();
+	}
 }
