@@ -7,7 +7,7 @@ public class Client {
 	private static final int WIDTH = 520;
 	private static final int HEIGHT = 660;
 	private static final int port = 1224;
-	private static final String hostInet = "192.168.0.101";
+	private static final String hostInet = "192.168.0.103";
 	
 	public static ServerConnectionController connectionController;
 	
