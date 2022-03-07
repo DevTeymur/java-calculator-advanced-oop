@@ -1,14 +1,14 @@
 import java.io.*;
 import java.net.*;
 
-public class ClientAccepter extends Thread
+public class ClientAcceptor extends Thread
 {
 	private Socket socket;
 	
 	private ObjectInputStream input = null;
 	private ObjectOutputStream output = null;
 	
-	public ClientAccepter(Socket socket)
+	public ClientAcceptor(Socket socket)
 	{
 		this.socket = socket;
 		
