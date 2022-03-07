@@ -7,7 +7,7 @@ public class Client {
 	private static final int WIDTH = 520;
 	private static final int HEIGHT = 660;
 	private static final int port = 1224;
-	private static final String hostInet = "192.168.0.103";
+	private static final String hostInet = "localhost";
 	
 	public static ServerConnectionController connectionController;
 	
@@ -24,7 +24,6 @@ public class Client {
 
 	public static void main(String[] args)
 	{
-		
 		connectionController = new ServerConnectionController(hostInet, port);
 		
 		frame = new JFrame("Complex Number Calculator");
@@ -44,8 +43,6 @@ public class Client {
 		num1ImagField = new InputTextField(frame, 290, 20, 150, 40);
 		num2RealField = new InputTextField(frame, 100, 80, 150, 40);
 		num2ImagField = new InputTextField(frame, 290, 80, 150, 40);
-		
-		
 		
 		selectedField = num1RealField;
 		
@@ -197,5 +194,4 @@ public class Client {
 	{
 		selectedField = newField;
 	}
-
 }

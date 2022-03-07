@@ -29,8 +29,8 @@ public class Server
 			try
 			{
 				socket = serverSocket.accept();
-				ClientAccepter accepter = new ClientAccepter(socket);
-				accepter.start();
+				ClientAcceptor acceptor = new ClientAcceptor(socket);
+				acceptor.start();
 			}
 			catch (IOException e)
 			{
