@@ -5,9 +5,8 @@ public class Server
 {
 	private InetAddress address;
 	private ServerSocket serverSocket;
-	private Socket socket;
-	
-	public Server(int port)
+
+    public Server(int port)
 	{
 		try
 		{
@@ -28,7 +27,7 @@ public class Server
 		{
 			try
 			{
-				socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
 				ClientAcceptor acceptor = new ClientAcceptor(socket);
 				acceptor.start();
 			}

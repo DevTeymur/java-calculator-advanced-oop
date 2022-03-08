@@ -30,14 +30,8 @@ public class Client {
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setResizable(false);
 		frame.setLayout(null);
-				
-		creatConstLabel(frame, "C1 = ", 35, 23, 60, 30);
-		creatConstLabel(frame, "+", 260, 23, 30, 30);
-		creatConstLabel(frame, "* i", 450, 15, 35, 60);
-		
-		creatConstLabel(frame, "C2 = ", 35, 83, 60, 30);
-		creatConstLabel(frame, "+", 260, 83, 30, 30);
-		creatConstLabel(frame, "* i", 450, 75, 35, 60);
+
+		createConstLabels();
 		
 		num1RealField = new InputTextField(frame, 100, 20, 150, 40);
 		num1ImagField = new InputTextField(frame, 290, 20, 150, 40);
@@ -48,7 +42,7 @@ public class Client {
 		
 		outputField = new JTextField();
 		outputField.setBounds(30, 550, 460, 60);
-		outputField.setFont(new Font("Calibri",Font.PLAIN,25));
+		outputField.setFont(new Font("Calibre",Font.PLAIN,25));
 		outputField.setEditable(false);
 	    frame.add(outputField);
 		
@@ -70,30 +64,27 @@ public class Client {
 		frame.setLocationRelativeTo(null);
 		
 		if (!connectionController.connected)
-		{
 			new ConnectionWindow(hostInet, port);
-		}
 		else
-		{
 			frame.setVisible(true);
-		}
 	}
 	
 	public static void showFrame()
 	{
 		frame.setVisible(true);
 	}
-	
-	public static void creatConstLabel(JFrame jframe, String text, int posX, int posY, int width, int height)
+
+	public static void createConstLabels()
 	{
-		JLabel label = new JLabel(text);
-		label.setBounds(posX, posY, width, height);  
-	    label.setFont(new Font("Calibri", Font.PLAIN, 20));
-	    label.setBackground(jframe.getBackground ());
-	    label.setOpaque(true);	    
-	    jframe.add(label);
+		new Label(frame, "C1 = ", 35, 23, 60, 30);
+		new Label(frame, "+", 260, 23, 30, 30);
+		new Label(frame, "* i", 450, 15, 35, 60);
+
+		new Label(frame, "C2 = ", 35, 83, 60, 30);
+		new Label(frame, "+", 260, 83, 30, 30);
+		new Label(frame, "* i", 450, 75, 35, 60);
 	}
-	
+
 	public static void generateNumberKeyPad()
 	{
 		new NumberButton(frame, "1", 30, 230, 100, 60);
@@ -177,17 +168,13 @@ public class Client {
 		}
 	}
 	
-	public static void negativate()
+	public static void negate()
 	{
 		String oldText = selectedField.getText();
 		if (oldText.startsWith("-"))
-		{
 			selectedField.setText(oldText.substring(1));
-		}
 		else
-		{
 			selectedField.setText("-" + oldText);
-		}
 	}
 	
 	public static void changeSelectedField(InputTextField newField)
