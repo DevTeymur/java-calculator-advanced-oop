@@ -53,16 +53,16 @@ public class ServerConnectionController
 		}
 	}
 	
-	private void sendData(String [] datas, String operator)
+	private void sendData(String [] data, String operator)
 	{
 		try
 		{
-			output.writeObject(new String("f"));
+			output.writeObject("f");
 			output.flush();
 			
 			for (int i = 0; i < 4; i++)
 			{
-				output.writeObject(datas[i]);
+				output.writeObject(data[i]);
 				output.flush();
 			}
 			
@@ -79,7 +79,7 @@ public class ServerConnectionController
 	{
 		try
 		{
-			output.writeObject(new String("t"));
+			output.writeObject("t");
 			output.flush();
 			
 			input.close();

@@ -2,7 +2,7 @@ import java.awt.event.*;
 
 public class OBActionListener implements ActionListener{
 
-	private OperationButton operationButton;
+	private final OperationButton operationButton;
 	
 	public OBActionListener(OperationButton button)
 	{
@@ -13,22 +13,13 @@ public class OBActionListener implements ActionListener{
 	public void actionPerformed(ActionEvent e)
 	{
 		if (operationButtonTextEquals("C"))
-		{
 			Client.clearFields();
-		}
 		else if (operationButtonTextEquals("DEL"))
-		{
 			Client.backSpaceFiled();
-		}
 		else if (operationButtonTextEquals("+/-"))
-		{
-			Client.negativate();
-		}
+			Client.negate();
 		else
-		{
 			Client.calcAndShowResult(getOperator());
-		}
-		
 	}
 	
 	private boolean operationButtonTextEquals(String text)

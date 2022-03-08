@@ -3,7 +3,7 @@ import java.net.*;
 
 public class ClientAcceptor extends Thread
 {
-	private Socket socket;
+	private final Socket socket;
 	
 	private ObjectInputStream input = null;
 	private ObjectOutputStream output = null;
@@ -116,8 +116,7 @@ public class ClientAcceptor extends Thread
 	{
 		try
 		{
-			String operator = (String)input.readObject();
-			return operator;
+			return (String)input.readObject();
 		}
 		catch (Exception e)
 		{
@@ -131,10 +130,7 @@ public class ClientAcceptor extends Thread
 		try
 		{
 			String signal = (String)input.readObject();
-			if (signal.equals("t"))
-				return true;
-			else
-				return false;
+			return signal.equals("t");
 		}
 		catch (Exception e)
 		{
@@ -145,28 +141,19 @@ public class ClientAcceptor extends Thread
 	
 	public String Operate(Complex number1, Complex number2, String operator)
 	{
-		if (operator.equals("+"))
-		{
-			return number1.summation(number2).toString();
-		}
-		else if (operator.equals("-"))
-		{
-			return number1.substraction(number2).toString();
-		}
-		else if (operator.equals("*"))
-		{
-			return number1.multiplication(number2).toString();
-		}
-		else if (operator.equals("/"))
-		{
-			try
-			{
-				return number1.division(number2).toString();
-			}
-			catch (ArithmeticException e)
-			{
-				return "Cannot divide by zero";
-			}
+		switch (operator) {
+			case "+":
+				return number1.summation(number2).toString();
+			case "-":
+				return number1.subtraction(number2).toString();
+			case "*":
+				return number1.multiplication(number2).toString();
+			case "/":
+				try {
+					return number1.division(number2).toString();
+				} catch (ArithmeticException e) {
+					return "Cannot divide by zero";
+				}
 		}
 		return "Wrong Operator!";
 	}

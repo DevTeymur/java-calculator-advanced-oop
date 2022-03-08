@@ -2,17 +2,11 @@ import java.io.*;
 
 public class Complex implements Serializable
 {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private float real;
 	private float imag;
-	
-	
-	public Complex()
-	{
-		this.real = 0;
-		this.imag = 0;
-	}
 	
 	public Complex(float real, float imag)
 	{
@@ -24,7 +18,7 @@ public class Complex implements Serializable
 	{
 		return new Complex(this.real + number.real, this.imag + number.imag);
 	}
-	public Complex substraction(Complex number)
+	public Complex subtraction(Complex number)
 	{
 		return new Complex(this.real - number.real, this.imag - number.imag);
 	}
@@ -50,10 +44,7 @@ public class Complex implements Serializable
 	
 	public boolean equals(Complex number)
 	{
-		if (this.real == number.real && this.imag == number.imag)
-			return true;
-		else
-			return false;
+		return this.real == number.real && this.imag == number.imag;
 	}
 	
 	public float getReal() {
@@ -72,18 +63,18 @@ public class Complex implements Serializable
 	@Override
 	public String toString()
 	{
-		String imagstr, realstr;
+		String imagStr, realStr;
 		
 		if (imag < 0)
-			imagstr = "- " + Math.abs(imag) + " i";
+			imagStr = "- " + Math.abs(imag) + " i";
 		else
-			imagstr = "+ " + imag + " i";
+			imagStr = "+ " + imag + " i";
 		
 		if (real < 0)
-			realstr = "- " + Math.abs(real);
+			realStr = "- " + Math.abs(real);
 		else
-			realstr = "" + real;
+			realStr = "" + real;
 			
-		return realstr + " " + imagstr;
+		return realStr + " " + imagStr;
 	}
 }
