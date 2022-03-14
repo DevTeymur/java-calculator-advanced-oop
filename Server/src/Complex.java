@@ -1,10 +1,7 @@
 import java.io.*;
 
-public class Complex implements Serializable
+public class Complex
 {
-	@Serial
-	private static final long serialVersionUID = 1L;
-
 	private float real;
 	private float imag;
 	
