@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.CompletableFuture;
 
 public class Client {
 	
@@ -24,8 +25,6 @@ public class Client {
 
 	public static void main(String[] args)
 	{
-		connectionController = new ServerConnectionController(hostInet, port);
-		
 		frame = new JFrame("Complex Number Calculator");
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setResizable(false);
@@ -56,17 +55,14 @@ public class Client {
 			@Override
 			public void windowClosing(WindowEvent evt)
 			{
-				Client.connectionController.endConnection();
-				System.exit(0);
+				CompletableFuture<Void> future = CompletableFuture.supplyAsync(Client.connectionController::endConnection);
+				future.thenRun(() -> System.exit(0));
 			}
 		});
 		
 		frame.setLocationRelativeTo(null);
-		
-		if (!connectionController.connected)
-			new ConnectionWindow(hostInet, port);
-		else
-			frame.setVisible(true);
+
+		connectionController = new ServerConnectionController(hostInet, port);
 	}
 	
 	public static void showFrame()
@@ -131,7 +127,7 @@ public class Client {
 		return selectedField.getText();
 	}
 	
-	public static void calcAndShowResult(String operator)
+	public static Void calcAndShowResult(String operator)
 	{
 		String result = connectionController.calculate(
 			num1RealField.getText(),
@@ -141,6 +137,7 @@ public class Client {
 			operator
 		);
 		setOutPutText(result);
+		return null;
 	}
 	
 	private static void setOutPutText(String text)

@@ -1,5 +1,6 @@
 import java.net.*;
 import java.io.*;
+import java.util.concurrent.CompletableFuture;
 
 public class ServerConnectionController
 {	
@@ -7,13 +8,15 @@ public class ServerConnectionController
 	public ObjectInputStream input;
 	public ObjectOutputStream output;
 	public boolean connected = false;
-	
+
 	public ServerConnectionController(String inetAddress, int port)
 	{
-		connectServer(inetAddress, port);
+		CompletableFuture.supplyAsync(()->connectServer(inetAddress, port));
 	}
-	
-	public void connectServer(String inetAddress, int port)
+
+
+
+	public Void connectServer(String inetAddress, int port)
 	{
 		try
 		{
@@ -23,11 +26,14 @@ public class ServerConnectionController
 			input = new ObjectInputStream(socket.getInputStream());
 			
 			connected = true;
+			Client.showFrame();
 		}
 		catch (Exception e)
 		{
 			connected = false;
+			new ConnectionWindow(inetAddress, port);
 		}
+		return null;
 	}
 	
 	public String calculate(String num1real, String num1imag, String num2real, String num2imag, String operator)
@@ -75,7 +81,7 @@ public class ServerConnectionController
 		}
 	}
 	
-	public void endConnection()
+	public Void endConnection()
 	{
 		try
 		{
@@ -90,5 +96,6 @@ public class ServerConnectionController
 		{
 			e.printStackTrace();
 		}
+		return null;
 	}
 }
