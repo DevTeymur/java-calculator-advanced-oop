@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.util.concurrent.CompletableFuture;
 
 public class OBActionListener implements ActionListener{
 
@@ -19,7 +20,7 @@ public class OBActionListener implements ActionListener{
 		else if (operationButtonTextEquals("+/-"))
 			Client.negate();
 		else
-			Client.calcAndShowResult(getOperator());
+			CompletableFuture.supplyAsync(()->Client.calcAndShowResult(getOperator()));
 	}
 	
 	private boolean operationButtonTextEquals(String text)
